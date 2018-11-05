@@ -1,4 +1,5 @@
 # EasyListView
+[![](https://jitpack.io/v/xushihai/EasyListView.svg)](https://jitpack.io/#xushihai/EasyListView)
 # Adapter
   通过anotationprocessor注解技术简化RecyclerView的Adapter的许多繁琐的代码
 Adapter功能:
