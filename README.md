@@ -6,10 +6,6 @@ Adapter功能:
   - @Adapter注解还提供多选或单选的compoundButton的id
   - @Holder注解和getViewTypeValue方法处理多视图的数据
 
-| setMode | 设置适配器 |
-|--|--|
-|  |  |
-
 
 注：所有的ViewHolder都需要集成BaseHolder
 1、最简单的单视图适配器
