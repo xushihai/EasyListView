@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_test_empty" android:title="测试空数据"/>
+    <item android:id="@+id/menu_test_error" android:title="测试加载失败"/>
+    <item android:id="@+id/menu_test_loading" android:title="测试修改加载动画"/>
+    <item android:id="@+id/menu_test_refresh" android:title="测试修改刷新视图"/>
+    <item android:id="@+id/menu_test_load_more" android:title="测试修改加载更多视图"/>
+    <item android:id="@+id/menu_test_multi_view" android:title="测试多视图"/>
+    <item android:id="@+id/menu_test_normal_single" android:title="测试单选和正常模式互相切换"/>
+    <item android:id="@+id/menu_test_normal_multi" android:title="测试多选和正常模式互相切换"/>
+
+</menu>

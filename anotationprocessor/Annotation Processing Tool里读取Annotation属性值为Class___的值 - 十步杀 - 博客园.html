@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://www.cnblogs.com/fuckingaway/p/6703021.html -->
+<html lang="zh-CN" class="translated-ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="never">
+<title>Annotation Processing Tool里读取Annotation属性值为Class&lt;?&gt;的值 - 十步杀 - 博客园</title>
+<meta property="og:description" content="Skip to content Peter Mount&#39;s Blog Java, Trains, Space, Weather and pretty much everything else ">
+<link type="text/css" rel="stylesheet" href="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/bundle-LessIsMore.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/bundle-LessIsMore-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/fuckingaway/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/fuckingaway/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/fuckingaway/wlwmanifest.xml">
+<script async="" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/analytics.js"></script><script src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/jquery-2.2.0.min.js"></script>
+<script type="text/javascript">var currentBlogApp = 'fuckingaway', cb_enable_mathjax=true;var isLogined=true;</script>
+<script type="text/x-mathjax-config;executed=true">
+    MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'blogpost-body', processEscapes: true },
+        TeX: { 
+            equationNumbers: { autoNumber: ['AMS'], useLabelIds: true }, extensions: ['extpfeil.js'] },
+            'HTML-CSS': { linebreaks: { automatic: true } },
+            SVG: { linebreaks: { automatic: true } }
+        });
+    </script><script src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/MathJax.js"></script>
+<script src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/blog-common.js" type="text/javascript"></script>
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><link type="text/css" rel="stylesheet" charset="UTF-8" href="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/translateelement.css"></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+<a name="top"></a>
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<div class="title"><a id="Header1_HeaderTitle" class="headermaintitle" href="https://www.cnblogs.com/fuckingaway/">十步杀</a></div>
+<div class="subtitle"></div>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li id="nav_sitehome"><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">博客园</a></li>
+<li id="nav_myhome"><a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/fuckingaway/">首页</a></li>
+<li id="nav_newpost"><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li id="nav_contact"><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/%E5%8D%81%E6%AD%A5%E6%9D%80">联系</a></li>
+<li id="nav_rss"><a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/fuckingaway/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="https://www.cnblogs.com/fuckingaway/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li id="nav_admin"><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<!--done-->
+随笔-1&nbsp;
+文章-0&nbsp;
+评论-0&nbsp;
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/fuckingaway/p/6703021.html">Annotation Processing Tool里读取Annotation属性值为Class&lt;?&gt;的值</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><blockquote>
+<div id="page" class="site"><a class="skip-link screen-reader-text" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/#content"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">跳到内容</font></font></a>
+<div class="col-width header-wrap">
+<div class="site-heading">
+<div class="site-branding">
+<p class="site-title"><a href="https://area-51.blog/" rel="home"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">彼得山的博客</font></font></a></p>
+</div>
+</div>
+</div>
+<div class="col-width sub-header-wrap">
+<p class="site-description"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Java，火车，太空，天气和其他一切</font></font></p>
+</div>
+<div id="content" class="site-content clear">
+<div class="col-width">
+<div id="primary" class="content-area">
+<h1 class="entry-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">从AnnotationProcessor中的Annotations获取Class值</font></font></h1>
+<div class="entry-meta"><span class="author vcard"><a class="url fn n" href="https://area-51.blog/author/petermount1/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">petermount1 </font></font></a><span class="entry-tags-date"><a href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/" rel="bookmark"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2009年2月13日</font></font></a><span class="entry-categories"><a href="https://area-51.blog/category/development/java/" rel="tag"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Java</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">，</font></font><a href="https://area-51.blog/category/development/java/javac/" rel="tag"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Javac</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">，</font></font><a href="https://area-51.blog/category/zarchived/reteptools/" rel="tag"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">retepTools</font></font></a> </span></span></span></div>
+<h2 class="screen-reader-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">邮政导航</font></font></h2>
+<div class="nav-links">
+<div class="nav-previous"><a href="https://area-51.blog/2009/02/12/connecting-to-both-local-lan-and-3s-3g-dongle-on-the-mac/" rel="prev"><span class="meta-nav"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">以前</font></font></span></a></div>
+<div class="nav-next"><a href="https://area-51.blog/2009/02/14/validating-source-with-annotation-processors/" rel="next"><span class="meta-nav"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">下一个</font></font></span></a></div>
+</div>
+<div class="entry-content">
+<p style="font: 12px Helvetica; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">在注释处理器中，一个常见的用例是读取注释中包含的值。</font><font style="vertical-align: inherit;">在大多数情况下，这样可以正常工作，但是在访问Annotations中的Class或Class数组中的值时会有一些注意事项。</font><font style="vertical-align: inherit;">如果您尝试访问正在处理的类的超类型中的方法的注释，情况会更糟。</font><font style="vertical-align: inherit;">在这里，我将介绍如何访问这些Class值以及如何在超类型中获取这些值 - 特别是在方法被覆盖时。</font></font></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 14px Helvetica; margin: 1px 0 0"><span style="font: bold 14px Helvetica"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">首先为什么？</font></font></span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">在retepTools内部，我们有一个AnnotationProcessor，它检查以确保正确使用某些注释，特别是</font></font><a href="http://retep.org/projects/retepTools/9.2/api/uk/org/retep/annotations/ReadLock.html"><span style="font: 12px Courier New"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@ReadLock</font></font></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">和</font></font><a href="http://retep.org/projects/retepTools/9.2/api/uk/org/retep/annotations/WriteLock.html"><span style="font: 12px Courier New"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@WriteLock</font></font></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">注释。</font><font style="vertical-align: inherit;">对于那些在同一方法上一起使用的注释，它是无效的。</font><font style="vertical-align: inherit;">对于使用one进行注释然后在另一个类中进行重写但使用另一个类进行注释的方法也是无效的，因此处理器会检查重写的方法并在违反规则时生成错误。</font></font></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">现在这在读取被覆盖的注释时引起了巨大的麻烦，因为虽然注释存在，但值（并且具体为Class类）是null。</font><font style="vertical-align: inherit;">虽然</font></font><span style="font: 12px Courier New"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@ReadLock和</font></font><span style="font: 12px Courier New"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@WriteLock不使用值，但另一个相关的注释</font></font><a href="http://retep.org/projects/retepTools/9.2/api/uk/org/retep/annotations/Contract.html"><span style="font: 12px Courier New"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@Contract</font></font></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">确实如此，所以这就是我最终解决问题的方法。</font></font></span></span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 14px Helvetica; margin: 1px 0 0"><span style="font: bold 14px Helvetica"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">通常的阅读注释值的方法</font></font></span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">在大多数情况下，当您拥有</font></font><span class="skimlinks-unlinked"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">javax.lang.model.element.Element时，可以使用getAnnotation（）方法返回注释，然后您可以访问其中包含的值。</font><font style="vertical-align: inherit;">例如，假设我们有一个名为Action的注释，它包含一个String值：</font></font></span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@Documented </font></font><br><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+@Retention（RetentionPolicy.RUNTIME）</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@target（ElementType.METHOD）</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">public @interface Action</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">{</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp; &nbsp; 字符串值（）;</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">}</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">我们使用针对run方法的注释来注释类：</font></font></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">公共类A {</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp; &nbsp; @Action（“做点什么”）</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp; &nbsp; public void run（）{</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp; &nbsp; }</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">}</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">现在在AnnotationProcessor中，显然可以通过调用getAnnotation（</font><span class="skimlinks-unlinked"><font style="vertical-align: inherit;">Action.class）</font></span><font style="vertical-align: inherit;">轻松获取值</font></font><span class="skimlinks-unlinked"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">，如果它返回实例调用value（）方法：</font></font></span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@SupportedAnnotationTypes（“*”）</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@SupportedSourceVersion（SourceVersion.RELEASE_6）</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@ProhibitAnnotationProcessing</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">公共类处理器</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;扩展AbstractProcessor</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">{</p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp;@覆盖</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp;public boolean process（final Set &lt;？extends TypeElement&gt; annotations，</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;最终RoundEnvironment env）</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">&nbsp;&nbsp; &nbsp;{</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;if（！env.processingOver（））</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for（元素e：env.getRootElements（））</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="Apple-tab-span" style="white-space: pre"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> TypeElement te = findEnclosingTypeElement（s）;</font></font></span></span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="skimlinks-unlinked"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">System.out.printf（“\ n扫描类型％s \ n \ n”，
+</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;te.getQualifiedName（））;</font></font></span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for（ExecutableElement ee：ElementFilter.methodsIn（</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;te.getEnclosedElements（）））</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;动作动作= ee.getAnnotation（</font></font><span class="skimlinks-unlinked"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Action.class）;</font></font></span></span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="skimlinks-unlinked"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">System.out.printf（</font></font></span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;“％s动作值=％s \ n”，</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;in.getSimpleName（），</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;action == null？</font><font style="vertical-align: inherit;">null：</font></font><span class="skimlinks-unlinked"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">action.value（））;</font></font></span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;返回虚假;</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp;public static TypeElement findEnclosingTypeElement（element e）</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;while（e！= null &amp;&amp;！（e instanceof TypeElement））</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;e = e.getEnclosingElement（）;</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return </font></font><span class="skimlinks-unlinked"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">TypeElement.class.cast（e）;</font></font></span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp;}</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">}</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">运行时会生成以下输出：</font></font></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">————————————————————————</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">建筑划痕</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp;&nbsp;任务段：[清理，安装]</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">————————————————————————</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">[清洁：清洁]</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">删除目录/ Users / peter / dev / retep / scratch / target</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">[编译器：compile {execution：compileAnnotations}]</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">将2个源文件编译为/ Users / peter / dev / retep / scratch / target / classes</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">[资源：资源]</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">使用默认编码复制已过滤的资源。</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">[编译器：编译]</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">将2个源文件编译为/ Users / peter / dev / retep / scratch / target / classes</font></font></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">扫描类型scratch.A</font></font></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">run Action value =做点什么</font></font></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 13px Helvetica; margin: 1px 0 0"><span style="font: bold 13px Helvetica"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">从重写方法中读取注释值</font></font></span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">现在这很好，但如果您正在查看重写类中的注释会发生什么？</font></font></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">假设我们有B类扩展A并覆盖run（）：</font></font></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">公共等级B扩展A {</font></font></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp;@覆盖</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;&nbsp; &nbsp;public void run（）{</font></font></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">}</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">现在，当我们运行处理器时，对于每个ExecutableElement，我们将首先查找注释，然后如果没有找到，我们将查找重写方法并检查那里。</font></font><span class="Apple-converted-space">&nbsp;</span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp; &nbsp; @Override</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;public boolean process( final Set&lt;? extends TypeElement&gt; annotations,</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;final RoundEnvironment env )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;if( !env.processingOver() )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for( Element e : env.getRootElements() )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;TypeElement te = findEnclosingTypeElement( e );</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="skimlinks-unlinked">System.out.printf( “\nScanning Type %s\n\n”,</span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;te.getQualifiedName() );</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for( ExecutableElement ee : ElementFilter.methodsIn(
+</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;te.getEnclosedElements() ) )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Action action = ee.getAnnotation( <span class="skimlinks-unlinked">Action.class );</span></span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if( action == null )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Look for the overridden method</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ExecutableElement oe = getExecutableElement( te,</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;ee.getSimpleName() );</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if( oe != null )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;action = oe.getAnnotation( <span class="skimlinks-unlinked">Action.class );</span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="skimlinks-unlinked">System.out.printf(</span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;“%s Action value = %s\n”,</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ee.getSimpleName(),</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;action == null ? null : <span class="skimlinks-unlinked">action.value() );</span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return false;</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;public ExecutableElement getExecutableElement( final TypeElement typeElement,</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;final Name name )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;TypeElement te = typeElement;</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;do</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;te = (TypeElement) processingEnv.getTypeUtils().asElement(</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;te.getSuperclass() );</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if( te != null )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for( ExecutableElement ee : ElementFilter.methodsIn(</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;te.getEnclosedElements() ) )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if( name.equals( ee.getSimpleName() ) &amp;&amp; ee.getParameters().isEmpty() )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return ee;</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;} while( te != null );</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;return null;</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;}</span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">Now when we run we get the annotated value on A.run() when we are processing B.run():</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">[compiler:compile]</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">Compiling 2 source files to /Users/peter/dev/retep/scratch/target/classes</p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">Scanning Type scratch.A</p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">run Action value = do something</p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">Scanning Type scratch.B</p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">run Action value = do something</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 14px Helvetica; margin: 1px 0 0"><span style="font: bold 14px Helvetica">The problem with Class</span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">Now this is fine, but
+ what happens if the annotation’s value is Class instead of String? Well
+ the problem here is that Javac does not load classes in the normal 
+manner. In fact it doesn’t at all for classes that are in the source – 
+it’s all contained within a model.</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">Now say our Action annotation had value defined as Class instead of String. In that case when we call <span class="skimlinks-unlinked">action.value() it would fail:</span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">[compiler:compile]</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">Compiling 2 source files to /Users/peter/dev/retep/scratch/target/classes</p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">Scanning Type scratch.A</p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="skimlinks-unlinked">javax.lang.model.type.MirroredTypeException: Attempt to access Class object for TypeMirror <span class="skimlinks-unlinked">java.lang.Runnable</span></span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">So we have to find 
+another way to get the value, and there are two available to us. The 
+first is not to use getAnnotation() but getAnnotationMirrors(), and the 
+second is a neat trick with MirroredTypeException.</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">Solution 1 use getAnnotationMirrors()
+</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">This 
+solution is a little long winded but is the most reliable. When 
+getAnnotationMirrors() is used, it returns a set of AnnotationMirror 
+instances, one for each annotation on that Element, so the first step is
+ to locate the correct AnnotationMirror for the annotation you require. 
+The next step is to extract the AnnotationValue’s from that mirror which
+ represents the values stored in the annotation. This is held in a map 
+keyed by an ExecutableElement.
+</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">Why 
+ExecutableElement? Well it’s because the annotation values are actually 
+defined as methods – hence why in our Action value is defined as 
+value().</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">So in the
+ next example we run through the AnnotationMirrors on a method until we 
+find the one for our annotation then run through until we find the 
+required value.
+</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">Once we have the AnnotationValue we simply print it to <span class="skimlinks-unlinked">System.out but normally you would use the getValue() method which returns the value as an Object. If the value is an array it returns a <span class="skimlinks-unlinked">java.util.List containing the values. Oh and if the values are of type Class then it returns a TypeMirror or a List of TypeMirrors.
+</span></span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">Element actionElement = processingEnv.getElementUtils().getTypeElement(</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<span class="skimlinks-unlinked">Action.class.getName() );</span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">TypeMirror actionType = actionElement.asType();</p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">for( ExecutableElement ee : ElementFilter.methodsIn(</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;te.getEnclosedElements() ) )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">{</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;ExecutableElement oe = ee;</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;AnnotationValue action = null;</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;while( action == null &amp;&amp; oe != null )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;for( AnnotationMirror am : oe.getAnnotationMirrors() )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if( am.getAnnotationType().equals( actionType ) )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for( <span class="skimlinks-unlinked">Map.Entry&lt;? extends ExecutableElement, ? extends AnnotationValue&gt; entry : am.getElementValues().entrySet() )</span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if( “value”.equals(</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;entry.getKey().getSimpleName().toString() ) )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;action = entry.getValue();</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;break;</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// Look for the overridden method</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;oe = getExecutableElement(</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;findEnclosingTypeElement( oe ),</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ee.getSimpleName() );</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;<span class="skimlinks-unlinked">System.out.printf(</span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;“%s Action value = %s\n”,</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ee.getSimpleName(),</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;action == null ? null : action );</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">}</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">Now at first that 
+appears to work, and in most use cases it does – if we have a method 
+thats overridden then we get the annotation values from the overridden 
+method.</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">However, although its
+ not obvious, if the super type is not part of the same CompilationUnit –
+ i.e. it’s in a third party jar or from a previous call to javac then it
+ will not find anything outside of that CompilationUnit.</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0"><span style="font: bold 12px Helvetica">The trouble with TypeMirrors</span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">Now the cause on why 
+the solution above fails isn’t obvious. The problem here is actually 
+down to the TypeMirror’s. In the above example we get a TypeMirror for 
+the annotation called actionType then search the AnnotationMirror set of
+ each element using that TypeMirror.</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">Now TypeMirror acts 
+in a similar way to how Class works at runtime. At run time Class is 
+equal if it’s in the same ClassLoader, so here TypeMirror is equal if 
+it’s in the same CompilationUnit. So the example above fails because 
+they are different instances.</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0"><br>
+</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">So the 
+solution here is not to use TypeMirror.equals() but to convert the 
+TypeMirror into a String representing the fully qualified class name and
+ use equals() on that String. Now, no matter what&nbsp; source the super type
+ comes from, it will always match.
+</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">Here’s the new version:</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">final String actionName = <span class="skimlinks-unlinked">Contract.class.getName();</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">for( ExecutableElement ee : ElementFilter.methodsIn(</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;te.getEnclosedElements() ) )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">{</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;ExecutableElement oe = ee;</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;AnnotationValue action = null;</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;while( action == null &amp;&amp; oe != null )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;for( AnnotationMirror am : oe.getAnnotationMirrors() )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if( actionName.equals(</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;am.getAnnotationType().toString() ) )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;for( <span class="skimlinks-unlinked">Map.Entry&lt;? extends ExecutableElement, ? extends AnnotationValue&gt; entry : am.getElementValues().entrySet() )</span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;if( “value”.equals(</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;entry.getKey().getSimpleName().toString() ) )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;action = entry.getValue();</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;break;</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// Look for the overridden method</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;oe = getExecutableElement(</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;findEnclosingTypeElement( oe ),</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ee.getSimpleName() );</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;<span class="skimlinks-unlinked">System.out.printf(</span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;“%s Action value = %s\n”,</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ee.getSimpleName(),</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;action == null ? null : action );</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">}</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">Now that one works. 
+The lesson here is to use the String version of TypeElement when 
+searching as two TypeElement’s representing the same class are not 
+always equal.</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0"><span style="font: bold 12px Helvetica">Solution 2 – Single Class values</span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">Now if your value 
+contains just one Class (i.e. not Class[] ) then there’s a much simpler 
+solution. This one isn’t that obvious, but I found that someone had a 
+similar problem in the sun forums<span style="font: 9px Helvetica"><sup>[1]</sup>.
+ There the trick is to actually use getAnnotation() and catch the 
+MirroredTypeException. Surprisingly the exception then provides the 
+TypeMirror of the required class:</span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">for( ExecutableElement ee : ElementFilter.methodsIn(</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;te.getEnclosedElements() ) )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">{</p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;Action action = ee.getAnnotation( <span class="skimlinks-unlinked">Action.class );</span></span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;if( action == null )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;// Look for the overridden method</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;ExecutableElement oe = getExecutableElement( te,</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;ee.getSimpleName() );</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;if( oe != null )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;action = oe.getAnnotation( <span class="skimlinks-unlinked">Action.class );</span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;TypeMirror value = null;</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;if( action != null )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;try</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="skimlinks-unlinked">action.value();</span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;catch( MirroredTypeException mte )</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;{</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;value = mte.getTypeMirror();</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;}</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp;<span class="skimlinks-unlinked">System.out.printf(</span></span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;“%s Action value = %s\n”,</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ee.getSimpleName(),</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0"><span class="Apple-converted-space">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;value );</span></p>
+<p style="font: 11px Courier New; margin: 1px 0 0">}</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">Notice getTypeMirror() method call? Here’s the output of the above loop:</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">[compiler:compile]</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">Compiling 2 source files to /Users/peter/dev/retep/scratch/target/classes</p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">Scanning Type scratch.A</p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">run Action value = <span class="skimlinks-unlinked">java.lang.Runnable</span></p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">Scanning Type scratch.B</p>
+<p style="font: 11px Courier New; min-height: 12px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 11px Courier New; margin: 1px 0 0">run Action value = <span class="skimlinks-unlinked">java.lang.Runnable</span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">This trick works fine
+ for individual classes, but sadly it does not work for Class[] arrays. 
+According to the javadocs it should work for Class[] as it should then 
+throw the MirroredTypesException instead and that exception contains an 
+alternate method that returns a List of TypeMirrors.</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">However it doesn’t – 
+it simply throws MirroredTypeException for the first element in the 
+array. I think it’s where it’s running through the array to populate it 
+and the first element is then throwing MirroredTypeException before it 
+gets chance to throw MirroredTypesException.</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 14px Helvetica; margin: 1px 0 0"><span style="font: bold 14px Helvetica">Conclusion</span></p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0">Well, hopefully this 
+article will save someone hours of trouble when they hit the same 
+problem. I’ve spent about 20 hours of time searching the net and 
+dabbling for these solutions – and at least these solutions use just the
+ documented public APIs.</p>
+<p style="font: 12px Helvetica; min-height: 14px; margin: 1px 0 0">&nbsp;</p>
+<p style="font: 12px Helvetica; margin: 1px 0 0"><span style="font: bold 12px Helvetica; text-decoration: underline">References</span></p>
+<ol style="list-style-type: decimal">
+<li style="font: 12px Helvetica; margin: 1px 0 0"> <a href="http://forums.sun.com/thread.jspa?threadID=791053">http://forums.sun.com/thread.jspa?threadID=791053</a></li>
+
+
+
+
+</ol>
+<div class="wpcnt">
+<div class="wpa wpmrec wpmrec2x" style="display: inline-block !important">
+				<span class="wpa-about"><span class="wpa-about">Advertisements</span></span>
+<div class="u">&nbsp;</div>
+
+
+
+
+</div>
+
+
+
+
+
+		</div>
+
+
+
+
+			</div>
+<div class="entry-meta">&nbsp;</div>
+<div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled">
+<div class="sharedaddy sd-sharing-enabled">
+<div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing">
+<h3 class="sd-title">Share this:</h3>
+<div class="sd-content">
+<ul>
+<li class="share-twitter"><a class="share-twitter sd-button share-icon" title="点击在Twitter上分享" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/?share=twitter&amp;nb=1" rel="nofollow" target="_blank" data-shared="sharing-twitter-8">Twitter</a></li>
+<li class="share-reddit"><a class="share-reddit sd-button share-icon" title="点击分享Reddit" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/?share=reddit&amp;nb=1" rel="nofollow" target="_blank" data-shared="">Reddit</a></li>
+<li class="share-facebook"><a class="share-facebook sd-button share-icon" title="在脸书上分享" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/?share=facebook&amp;nb=1" rel="nofollow" target="_blank" data-shared="sharing-facebook-8">Facebook</a></li>
+<li class="share-end"></li>
+
+
+
+
+</ul>
+
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+</div>
+<div id="like-post-wrapper-11803282-8-58eee985da308" class="sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-loaded" data-src="//widgets.wp.com/likes/#blog_id=11803282&amp;post_id=8&amp;origin=reteporg.wordpress.com&amp;obj_id=11803282-8-58eee985da308" data-name="like-post-frame-11803282-8-58eee985da308">&nbsp;</div>
+<div id="jp-relatedposts" class="jp-relatedposts" style="display: block">
+<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+<div class="jp-relatedposts-items jp-relatedposts-items-minimal">
+<p class="jp-relatedposts-post jp-relatedposts-post0" data-post-id="9" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" title="Validating source with Annotation Processors
+
+The release of retepTools 9.2 this week introduces a new annotation processor which validates the use of some of the annotations provided by the library generating either compilation warnings or errors dependent upon the errors found. This article describes how that processor works and the reasons behind it’s creation. In…" href="https://area-51.blog/2009/02/14/validating-source-with-annotation-processors/" rel="nofollow" data-origin="8" data-position="0">Validating source with Annotation Processors</a><span class="jp-relatedposts-post-context">In "Java"</span></span></p>
+<p class="jp-relatedposts-post jp-relatedposts-post1" data-post-id="7" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" title="Using the retepMicroKernel - Part 2
+
+In Part 1 I gave a brief overview of the microkernel and how the application is constructed on disk. In this article I will go through how to actually write an application to run within the retepMicroKernel, from a simple application, one who’s beans are configurable after compile time, to…" href="https://area-51.blog/2009/01/04/using-the-retepmicrokernel-part-2/" rel="nofollow" data-origin="8" data-position="1">Using the retepMicroKernel - Part 2</a><span class="jp-relatedposts-post-context">In "retepMicroKernel"</span></span></p>
+<p class="jp-relatedposts-post jp-relatedposts-post2" data-post-id="12" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" title="retepTools并发支持retepTools并发支持retepTools库为JDK 1.5或更高版本的java.util.concurrency包提供的内容提供了额外的并发支持。 retepTools提供的并发支持的核心组件是锁定。 通过使用一组注释，可以标记方法，以便......" href="https://area-51.blog/2009/03/12/reteptools-concurrency-support/" rel="nofollow" data-origin="8" data-position="2">retepTools Concurrency Support</a><span class="jp-relatedposts-post-context">In "Java"</span></span></p>
+
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+</div>
+<h2 class="screen-reader-text">Post navigation</h2>
+<div class="nav-links">
+<div class="nav-previous"><a href="https://area-51.blog/2009/02/12/connecting-to-both-local-lan-and-3s-3g-dongle-on-the-mac/" rel="prev"><span class="meta-nav">Previous <span class="meta-nav-title">Connecting to both local lan and 3’s 3G Dongle on the&nbsp;Mac</span></span></a></div>
+<div class="nav-next"><a href="https://area-51.blog/2009/02/14/validating-source-with-annotation-processors/" rel="next"><span class="meta-nav">Next <span class="meta-nav-title">Validating source with Annotation&nbsp;Processors </span></span></a></div>
+
+
+
+
+</div>
+<div id="comments" class="comments-area clear-fix">
+<h2 class="comments-title">
+			12 Comments		</h2>
+<ol class="comment-list">
+<li id="comment-199" class="comment even thread-even depth-1 highlander-comment">
+<div class="comment-author vcard">
+						<img id="grav-cd9c712ff19ab25859e3c52193d19621-0" class="avatar avatar-111 grav-hashed grav-hijack" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/cd9c712ff19ab25859e3c52193d19621.jpg" alt="" width="111" height="111">						<strong class="fn"><a class="url" href="http://www.yahoo.com/" rel="external nofollow">Keydren</a></strong> 					</div>
+<div class="comment-metadata">
+						<a href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/#comment-199">
+							
+								May 17, 2011 at 7:15 am							
+						</a>
+											</div>
+<div class="comment-content">
+<p>I bow down humbly in the presence of such grtaenses.</p>
+
+
+
+
+
+				</div>
+<div class="reply"><a class="comment-reply-link" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/?replytocom=199#respond" rel="nofollow">Reply</a></div>
+
+
+
+
+			
+</li>
+<li id="comment-253" class="comment odd alt thread-odd thread-alt depth-1 parent highlander-comment">
+<div class="comment-author vcard">
+						<img id="grav-0d8e7a4183fe613231247bfcfe218f94-0" class="avatar avatar-111 grav-hashed grav-hijack" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/0d8e7a4183fe613231247bfcfe218f94.jpg" alt="" width="111" height="111">						<strong class="fn">hiddenone</strong> 					</div>
+<div class="comment-metadata">
+						<a href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/#comment-253">
+							
+								September 24, 2011 at 8:07 pm							
+						</a>
+											</div>
+<div class="comment-content">
+<p>Nice post, but this works only for retrieving type metamodel (TypeMirror) from annotation elements whose value is of type Class.</p>
+<p>Is it actually possible to load the Class somehow?</p>
+
+
+
+
+
+				</div>
+<div class="reply"><a class="comment-reply-link" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/?replytocom=253#respond" rel="nofollow">Reply</a></div>
+<ol class="children">
+<li id="comment-259" class="comment byuser comment-author-petermount1 bypostauthor even depth-2 highlander-comment">
+<div class="comment-author vcard">
+						<img id="grav-248dc1bb013220bdcfa68347fff5bdba-0" class="avatar avatar-111 grav-hashed grav-hijack" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/248dc1bb013220bdcfa68347fff5bdba.png" alt="" width="111" height="111">						<strong class="fn"><a class="url" href="https://reteporg.wordpress.com/" rel="external nofollow">petermount1</a></strong> 					</div>
+<div class="comment-metadata">
+						<a href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/#comment-259">
+							
+								September 27, 2011 at 12:00 pm							
+						</a>
+											</div>
+<div class="comment-content">
+<p>The problem is that when the annotation processor runs it runs 
+from within Javac and as such you cannot load the class as all you have 
+is the source classpath.</p>
+<p>During compilation the classes are not actually loaded in the normal 
+sense, only the meta data is loaded, so if you try to load those classes
+ normally and then use reflection then it will fail.</p>
+
+
+
+
+
+				</div>
+<div class="reply"><a class="comment-reply-link" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/?replytocom=259#respond" rel="nofollow">Reply</a></div>
+
+
+
+
+			
+</li>
+
+
+
+
+</ol>
+</li>
+<li id="comment-270" class="comment odd alt thread-even depth-1 parent highlander-comment">
+<div class="comment-author vcard">
+						<img id="grav-9e75037ff71a44a74f8ba88b3fa5ead1-0" class="avatar avatar-111 grav-hashed grav-hijack" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/9e75037ff71a44a74f8ba88b3fa5ead1.jpeg" alt="" width="111" height="111">						<strong class="fn"><a class="url" href="http://www.aljoscha-rittner.de/blog/" rel="external nofollow">arittner</a></strong> 					</div>
+<div class="comment-metadata">
+						<a href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/#comment-270">
+							
+								October 4, 2011 at 4:01 pm							
+						</a>
+											</div>
+<div class="comment-content">
+<p>Hi Peter, your post is great, thank you!</p>
+<p>I’ve more than one annotation for my classes. One annotation 
+registers a Swing Action in a registry and two other annotations put 
+this action in different GUI components (like menu, toolbar …).</p>
+<p>To register a special action to a component I prefer the class value.
+ It’s more type save, but I’ve a problem to get the AnnotationMirror in 
+nested Annotations.</p>
+<p>here an example:</p>
+<p>@Action (id=”my-super-action”, icon=”org/mycomp/<span class="skimlinks-unlinked">icon.png”)<br>
+@ActionReferences ({<br>
+  @ActionReference (component=<span class="skimlinks-unlinked">MyPopupMenu.class, position = 100),<br>
+  @ActionReference (component=<span class="skimlinks-unlinked">MyToolbar.class, position = 10),<br>
+})<br>
+public class MySuperAction implements ActionListener {<br>
+}</span></span></span></p>
+<p>with </p>
+<p>@Retention(RetentionPolicy.SOURCE)<br>
+@Target(<span class="skimlinks-unlinked">ElementType.TYPE)<br>
+public @interface Action {…}</span></p>
+<p>@Retention(RetentionPolicy.SOURCE)<br>
+@Target({<span class="skimlinks-unlinked">ElementType.TYPE, <span class="skimlinks-unlinked">ElementType.FIELD, ElementType.METHOD})<br>
+public @interface ActionReference {…}</span></span></p>
+<p>@Retention(RetentionPolicy.SOURCE)<br>
+@Target({<span class="skimlinks-unlinked">ElementType.TYPE, <span class="skimlinks-unlinked">ElementType.FIELD, ElementType.METHOD, ElementType.PACKAGE})<br>
+public @interface ActionReferences {<br>
+    ActionReference[] value();<br>
+}</span></span></p>
+<p>With you sample code it’s easy to evaluate a class value in the 
+@Action annotation. But if I’m in the process method to parse the Action
+ annotation, I’m unable to go into the ActionReference:</p>
+<p>public final boolean process(Set annotations, RoundEnvironment env) {</p>
+<p>for (Element e : env.getElementsAnnotatedWith(<span class="skimlinks-unlinked">Action.class)) {</span></p>
+<p>      TypeElement clazz = (TypeElement) e;<br>
+      Action action = clazz.getAnnotation(<span class="skimlinks-unlinked">Action.class);<br>
+      String teName = elements.getBinaryName(clazz).toString();<br>
+      // some useful things…</span></p>
+<p>      ActionReference aref = e.getAnnotation(<span class="skimlinks-unlinked">ActionReference.class);<br>
+      if (aref != null) {<br>
+        processReferences(e, teName, aref, category);<br>
+      }<br>
+      ActionReferences refs = e.getAnnotation(<span class="skimlinks-unlinked">ActionReferences.class);<br>
+      if (refs != null) {<br>
+        for (ActionReference actionReference : <span class="skimlinks-unlinked">refs.value()) {<br>
+          processReferences(e, teName, actionReference, category);<br>
+        }<br>
+      }<br>
+}</span></span></span></p>
+<p>In processReference it’s no problem to call the annotation properties. But I’ve no idea how to get the AnnotationValues</p>
+<p>This does not work:</p>
+<p>  private void processReferences(<br>
+    Element e, String teName, ActionReference ref, String category)<br>
+  {<br>
+    String clazz = null;</p>
+<p>    AnnotationValue componentValue = null;<br>
+    for (AnnotationMirror am : e.getAnnotationMirrors()) {<br>
+       for (<span class="skimlinks-unlinked">Map.Entry entry : am.getElementValues().entrySet()) {<br>
+        // Looking for the class value from component<br>
+        if (“component”.equals(entry.getKey().getSimpleName().toString())) {<br>
+            componentValue = entry.getValue();<br>
+            break;<br>
+          }<br>
+        }<br>
+      clazz = componentValue .getValue().toString();</span></p>
+<p>I’ve only the base Element provided by the getElementsAnnotatedWith method.</p>
+<p>Do you have an idea?&nbsp;</p>
+<p>br, josh.</p>
+
+
+
+
+
+				</div>
+<div class="reply"><a class="comment-reply-link" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/?replytocom=270#respond" rel="nofollow">Reply</a></div>
+<ol class="children">
+<li id="comment-271" class="comment byuser comment-author-petermount1 bypostauthor even depth-2 highlander-comment">
+<div class="comment-author vcard">
+						<img id="grav-248dc1bb013220bdcfa68347fff5bdba-1" class="avatar avatar-111 grav-hashed grav-hijack" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/248dc1bb013220bdcfa68347fff5bdba.png" alt="" width="111" height="111">						<strong class="fn"><a class="url" href="https://reteporg.wordpress.com/" rel="external nofollow">petermount1</a></strong> 					</div>
+<div class="comment-metadata">
+						<a href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/#comment-271">
+							
+								October 5, 2011 at 8:36 am							
+						</a>
+											</div>
+<div class="comment-content">
+<p>Looking at the javadoc for AnnotationValue:</p>
+<p>A value is of one of the following types:<br>
+* a wrapper class (such as Integer) for a primitive type<br>
+* String<br>
+* TypeMirror<br>
+* VariableElement (representing an enum constant)<br>
+* AnnotationMirror<br>
+* List (representing the elements, in declared order, if the value is an array)</p>
+<p>So in theory going by your code, the “value” entry inside 
+ActionReferences should be a List and then each one of those an 
+AnnotationMirror for each ActionReference.</p>
+<p>I’ll have a play to see if that’s the case.</p>
+
+
+
+
+
+				</div>
+<div class="reply"><a class="comment-reply-link" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/?replytocom=271#respond" rel="nofollow">Reply</a></div>
+
+
+
+
+			
+</li>
+
+
+
+
+</ol>
+</li>
+<li id="comment-544" class="comment odd alt thread-odd thread-alt depth-1 highlander-comment">
+<div class="comment-author vcard">
+						<img id="grav-aca09ad49e507071cc4f21568e8cd2f6-0" class="avatar avatar-111 grav-hashed grav-hijack" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/aca09ad49e507071cc4f21568e8cd2f6.jpeg" alt="" width="111" height="111">						<strong class="fn"><a class="url" href="http://gravatar.com/mfoliveira" rel="external nofollow">mfoliveira</a></strong> 					</div>
+<div class="comment-metadata">
+						<a href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/#comment-544">
+							
+								July 6, 2012 at 4:35 pm							
+						</a>
+											</div>
+<div class="comment-content">
+<p>Awesome.<br>
+Many thanks&nbsp;</p>
+
+
+
+
+
+				</div>
+<div class="reply"><a class="comment-reply-link" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/?replytocom=544#respond" rel="nofollow">Reply</a></div>
+
+
+
+
+			
+</li>
+<li id="comment-1007" class="comment even thread-even depth-1 highlander-comment">
+<div class="comment-author vcard">
+						<img id="grav-0fb98954b720d4b5a34a007034c23000-0" class="avatar avatar-111 grav-hashed grav-hijack" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/0fb98954b720d4b5a34a007034c23000.jpg" alt="" width="111" height="111">						<strong class="fn">yash</strong> 					</div>
+<div class="comment-metadata">
+						<a href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/#comment-1007">
+							
+								January 24, 2013 at 9:22 am							
+						</a>
+											</div>
+<div class="comment-content">
+<p>Hi Peter, </p>
+<p>Thanks for the awesome article. I have been searching a lot to access the class values that are stored in the annotation.</p>
+<p>Here in your example “Action” annotation has the Class variable 
+stored in value() method right. I am using your second solution and 
+trying to get a hold of Class variable stored in value().</p>
+<p>I am able to get a TypeMirror object, But unable to extract the class
+ object which is stored in it. It would be great if you can help me 
+understand or guide me about how to do it.</p>
+<p>Thanks</p>
+
+
+
+
+
+				</div>
+<div class="reply"><a class="comment-reply-link" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/?replytocom=1007#respond" rel="nofollow">Reply</a></div>
+
+
+
+
+			
+</li>
+<li id="comment-1085" class="comment odd alt thread-odd thread-alt depth-1 parent highlander-comment">
+<div class="comment-author vcard">
+						<img id="grav-d58f8f4bc1c50adb91edfe0497fc1192-0" class="avatar avatar-111 grav-hashed grav-hijack" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/d58f8f4bc1c50adb91edfe0497fc1192.jpg" alt="" width="111" height="111">						<strong class="fn">CGen</strong> 					</div>
+<div class="comment-metadata">
+						<a href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/#comment-1085">
+							
+								March 1, 2013 at 11:51 am							
+						</a>
+											</div>
+<div class="comment-content">
+<p>Hello!</p>
+<p>Look at the interface “Types”. Utility methods for operating on types.<br>
+<a href="http://docs.oracle.com/javase/7/docs/api/javax/lang/model/util/Types.html" rel="nofollow">http://docs.oracle.com/javase/7/docs/api/javax/lang/model/util/Types.html</a></p>
+<p>“if( am.getAnnotationType().equals( actionType ) )” – this is not right.</p>
+<p>You must use the “boolean isSameType(TypeMirror t1,<br>
+                 TypeMirror t2)” method .</p>
+<p>Thank you, good luck!</p>
+
+
+
+
+
+				</div>
+<div class="reply"><a class="comment-reply-link" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/?replytocom=1085#respond" rel="nofollow">Reply</a></div>
+<ol class="children">
+<li id="comment-1086" class="comment even depth-2 highlander-comment">
+<div class="comment-author vcard">
+						<img id="grav-d58f8f4bc1c50adb91edfe0497fc1192-1" class="avatar avatar-111 grav-hashed grav-hijack" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/d58f8f4bc1c50adb91edfe0497fc1192.jpg" alt="" width="111" height="111">						<strong class="fn">CGen</strong> 					</div>
+<div class="comment-metadata">
+						<a href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/#comment-1086">
+							
+								March 1, 2013 at 12:03 pm							
+						</a>
+											</div>
+<div class="comment-content">
+<p>And more. <a href="http://docs.oracle.com/javase/7/docs/api/javax/lang/model/type/TypeMirror.html" rel="nofollow">http://docs.oracle.com/javase/7/docs/api/javax/lang/model/type/TypeMirror.html</a><br>
+“Types should be compared using the utility methods in Types. There is 
+no guarantee that any particular type will always be represented by the 
+same object.”</p>
+
+
+
+
+
+				</div>
+<div class="reply"><a class="comment-reply-link" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/?replytocom=1086#respond" rel="nofollow">Reply</a></div>
+
+
+
+
+			
+</li>
+
+
+
+
+</ol>
+</li>
+<li id="comment-28284" class="comment odd alt thread-even depth-1 highlander-comment">
+<div class="comment-author vcard">
+						<img id="grav-0190e726271c6a7bb2c6efb4853f1841-0" class="avatar avatar-111 grav-hashed grav-hijack" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/0190e726271c6a7bb2c6efb4853f1841.jpeg" alt="" width="111" height="111">						<strong class="fn"><a class="url" href="http://gravatar.com/ordiel" rel="external nofollow">Ordiel</a></strong> 					</div>
+<div class="comment-metadata">
+						<a href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/#comment-28284">
+							
+								January 25, 2015 at 6:54 am							
+						</a>
+											</div>
+<div class="comment-content">
+<p>To whomever who wrote this, Thanks a lot! (I had solved my own 
+question, but you just make me feel quiet by showing me that I chose the
+ right solution)</p>
+
+
+
+
+
+				</div>
+<div class="reply"><a class="comment-reply-link" href="https://area-51.blog/2009/02/13/getting-class-values-from-annotations-in-an-annotationprocessor/?replytocom=28284#respond" rel="nofollow">Reply</a></div>
+
+
+
+
+			
+</li>
+<li id="comment-31766" class="pingback even thread-odd thread-alt depth-1 highlander-comment">
+<div class="comment-body">
+				Pingback: <a class="url" href="http://cosenonjaviste.it/java-annotation-processing/" rel="external nofollow">Java Annotation Processing - CoseNonJaviste</a> 			</div>
+
+
+
+
+
+</li>
+<li id="comment-32077" class="pingback odd alt thread-even depth-1 highlander-comment">
+<div class="comment-body">
+				Pingback: <a class="url" href="http://codingjam.it/java-annotation-processing/" rel="external nofollow">CodingJamJava Annotation Processing - CodingJam</a> 			</div>
+
+
+
+
+
+</li>
+
+
+
+
+</ol>
+<div id="respond" class="comment-respond js">
+<h3 id="reply-title" class="comment-reply-title">Leave a Reply </h3>
+<form id="commentform" class="comment-form" action="https://area-51.blog/wp-comments-post.php" method="post">
+<div class="comment-form-field comment-textarea">
+<div id="comment-form-comment"><textarea class="autosizejs " style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px none; padding: 0px; height: 0px !important; min-height: 0px !important; overflow: hidden; font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif; font-size: 14px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; text-decoration: none; word-spacing: 0px; text-indent: 0px; line-height: 21px; width: 611.367px" tabindex="-1"></textarea><textarea id="comment" style="height: 41px; overflow: hidden" title="在这里输入你的评论......" name="comment"></textarea></div>
+</div>
+</form></div>
+</div>
+</div>
+<div id="secondary" class="widget-area">
+<h2 class="widget-title">Previous articles</h2>
+<label class="screen-reader-text" for="archives-dropdown-3">Previous articles</label></div>
+</div>
+</div>
+</div>
+<div id="page" class="site">
+<div id="content" class="site-content clear">
+<div class="col-width">
+<div id="secondary" class="widget-area">
+<h2 class="widget-title">Topics</h2>
+<div style="overflow: hidden"><a style="font-size: 100%; padding: 1px; margin: 1px" title="宽带（3）" href="https://area-51.blog/category/networking/broadband/">Broadband</a> <a style="font-size: 192.10526315789%; padding: 1px; margin: 1px" title="Debian（13）" href="https://area-51.blog/category/operating-systems/linux/debian/">Debian</a> <a style="font-size: 247.36842105263%; padding: 1px; margin: 1px" title="Java（19）" href="https://area-51.blog/category/development/java/">Java</a> <a style="font-size: 100%; padding: 1px; margin: 1px" title="Javac（3）" href="https://area-51.blog/category/development/java/javac/">Javac</a> <a style="font-size: 118.42105263158%; padding: 1px; margin: 1px" title="JAXB（5）" href="https://area-51.blog/category/development/java/jaxb/">JAXB</a> <a style="font-size: 155.26315789474%; padding: 1px; margin: 1px" title="基奈（9）" href="https://area-51.blog/category/zarchived/kenai/">kenai</a> <a style="font-size: 109.21052631579%; padding: 1px; margin: 1px" title="豹（4）" href="https://area-51.blog/category/operating-systems/os-x/leopard/">leopard</a> <a style="font-size: 275%; padding: 1px; margin: 1px" title="Linux（22）" href="https://area-51.blog/category/operating-systems/linux/">Linux</a> <a style="font-size: 146.05263157895%; padding: 1px; margin: 1px" title="Linux Mint（8）" href="https://area-51.blog/category/operating-systems/linux/linux-mint/">Linux Mint</a> <a style="font-size: 164.47368421053%; padding: 1px; margin: 1px" title="Mac（10）" href="https://area-51.blog/category/operating-systems/mac/">Mac</a> <a style="font-size: 155.26315789474%; padding: 1px; margin: 1px" title="maven（9）" href="https://area-51.blog/category/development/java/maven/">maven</a> <a style="font-size: 155.26315789474%; padding: 1px; margin: 1px" title="网络（9）" href="https://area-51.blog/category/networking/">Networking</a> <a style="font-size: 118.42105263158%; padding: 1px; margin: 1px" title="操作系统（5）" href="https://area-51.blog/category/operating-systems/">Operating Systems</a> <a style="font-size: 127.63157894737%; padding: 1px; margin: 1px" title="OS-X（6）" href="https://area-51.blog/category/operating-systems/os-x/">OS-X</a> <a style="font-size: 164.47368421053%; padding: 1px; margin: 1px" title="议会（10）" href="https://area-51.blog/category/parliament/">Parliament</a> <a style="font-size: 100%; padding: 1px; margin: 1px" title="PostgreSQL（3）" href="https://area-51.blog/category/postgresql/">PostgreSQL</a> <a style="font-size: 182.89473684211%; padding: 1px; margin: 1px" title="覆盆子PI（12）" href="https://area-51.blog/category/raspberry-pi/">Raspberry PI</a> <a style="font-size: 100%; padding: 1px; margin: 1px" title="retepMicroKernel（3）" href="https://area-51.blog/category/zarchived/retepmicrokernel/">retepMicroKernel</a> <a style="font-size: 127.63157894737%; padding: 1px; margin: 1px" title="retepTools（6）" href="https://area-51.blog/category/zarchived/reteptools/">retepTools</a> <a style="font-size: 228.94736842105%; padding: 1px; margin: 1px" title="东南（17）" href="https://area-51.blog/category/trains-2/southeastern-trains/">SouthEastern</a> <a style="font-size: 118.42105263158%; padding: 1px; margin: 1px" title="空间（5）" href="https://area-51.blog/category/space/">Space</a> <a style="font-size: 118.42105263158%; padding: 1px; margin: 1px" title="ssh（5）" href="https://area-51.blog/category/networking/ssh/">ssh</a> <a style="font-size: 109.21052631579%; padding: 1px; margin: 1px" title="雄猫（4）" href="https://area-51.blog/category/development/tomcat/">Tomcat</a> <a style="font-size: 155.26315789474%; padding: 1px; margin: 1px" title="火车（9）" href="https://area-51.blog/category/trains-2/">Trains</a> <a style="font-size: 182.89473684211%; padding: 1px; margin: 1px" title="Ubuntu（12）" href="https://area-51.blog/category/operating-systems/linux/ubuntu/">Ubuntu</a> <a style="font-size: 265.78947368421%; padding: 1px; margin: 1px" title="未分类（21）" href="https://area-51.blog/category/uncategorized/">Uncategorized</a> <a style="font-size: 127.63157894737%; padding: 1px; margin: 1px" title="天气（6）" href="https://area-51.blog/category/weather/">Weather</a> <a style="font-size: 127.63157894737%; padding: 1px; margin: 1px" title="网（6）" href="https://area-51.blog/category/web/">Web</a> <a style="font-size: 109.21052631579%; padding: 1px; margin: 1px" title="Windows（4）" href="https://area-51.blog/category/operating-systems/windows/">Windows</a> <a style="font-size: 136.84210526316%; padding: 1px; margin: 1px" title="XML（7）" href="https://area-51.blog/category/xml/">XML</a></div>
+</div>
+<div class="site-info"> <a href="https://wordpress.com/?ref=footer_website">Create a free website or blog at WordPress.com.</a> <br>
+									</div>
+
+
+
+
+
+			
+
+		</div>
+
+
+
+
+
+	</div>
+
+
+
+
+
+
+</div>
+
+
+
+</blockquote></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg">已推荐</a>
+            <a id="green_channel_follow" onclick="follow(&#39;ebb5a81f-fa09-e711-845c-ac853d9f53ac&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/fuckingaway/" target="_blank"><img src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/sample_face.gif" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/fuckingaway/">十步杀</a><br>
+            <a href="http://home.cnblogs.com/u/fuckingaway/followees">关注 - 0</a><br>
+            <a href="http://home.cnblogs.com/u/fuckingaway/followers">粉丝 - 0</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;ebb5a81f-fa09-e711-845c-ac853d9f53ac&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(6703021,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">1</span>
+    </div>
+    <div class="buryit" onclick="votePost(6703021,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+            您已推荐过，<a href="javascript:void(0);" onclick="votePost(6703021,&#39;Digg&#39;, true);return false;" class="digg_gray">取消</a>
+    </div>
+</div>
+<script type="text/javascript">
+    currentDiggType = 1;
+</script></div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2017-04-13 11:15</span> <a href="https://www.cnblogs.com/fuckingaway/">十步杀</a> 阅读(<span id="post_view_count">358</span>) 评论(<span id="post_comment_count">0</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=6703021" rel="nofollow">编辑</a> <a href="https://www.cnblogs.com/fuckingaway/p/6703021.html#" onclick="AddToWz(6703021);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=341206,cb_entryId=6703021,cb_blogApp=currentBlogApp,cb_blogUserGuid='ebb5a81f-fa09-e711-845c-ac853d9f53ac',cb_entryCreatedDate='2017/4/13 11:15:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/fuckingaway/p/6703021.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/fuckingaway/p/6703021.html#top">返回顶部</a></div>
+<div id="comment_form_container"><script type="text/javascript" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/mention.js"></script>
+<div id="commentform_title">发表评论</div>
+<span id="tip_comment" style="color:Red"></span>
+<p>
+昵称：<input type="text" id="tbCommentAuthor" class="author" disabled="disabled" size="50" value="LinuxCC">
+</p>
+<div class="commentbox_main">
+<div class="commentbox_title">
+<div class="commentbox_title_left">评论内容：</div>
+<div class="commentbox_title_right">
+<img id="ubb_quote" class="comment_icon" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/quote.gif" alt="引用" title="添加引用" onclick="insertUBB(&#39;tbCommentBody&#39;,&#39;quote&#39;)">
+<img id="ubb_bold" class="comment_icon" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/b.png" alt="粗体" title="添加粗体" onclick="insertUBB(&#39;tbCommentBody&#39;,&#39;b&#39;)">
+<img id="ubb_url" class="comment_icon" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/lk.png" alt="链接" title="添加链接" onclick="insertUbbUrl(&#39;tbCommentBody&#39;)">
+<img id="ubb_indent" class="comment_icon" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/indent.png" alt="缩进" title="添加首行缩进" onclick="insertIndent(&#39;tbCommentBody&#39;)">
+<img id="ubb_code" class="comment_icon" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/InsertCode.gif" alt="代码" title="添加代码" onclick="insertUbbCode()">
+<img id="ubb_img" class="comment_icon" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/img.gif" alt="图片" title="上传图片" onclick="OpenImageUploadWindow();">
+</div>
+</div>
+<div class="clear"></div>
+<textarea id="tbCommentBody" class="comment_textarea"></textarea>
+</div>
+<p id="commentbox_opt">
+<input id="btn_comment_submit" type="button" class="comment_btn" value="提交评论">
+<span id="span_comment_canceledit" style="display:none"><a href="javascript:void(0);" onclick="return CancelCommentEdit()">不改了</a></span>
+<a href="javascript:void(0);" onclick="return logout();">退出</a>
+        <a id="commentbox_opt_sub" href="javascript:void(0);" title="订阅后有新评论时会邮件通知您" onclick="commentManager.Subscribe()">订阅评论</a>
+</p>
+<div id="tip_comment2" style="color:Red"></div>
+<p>
+[Ctrl+Enter快捷键提交]
+</p>
+<div style="display:none">
+<span id="comment_edit_id"></span><span id="span_parentcomment_id"></span>
+<span id="span_parent_id"></span>
+<span id="span_comment_replyto"></span>
+<span id="span_comment_posted"></span>
+</div>
+</div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】超50万VC++源码: 大型组态工控、电力仿真CAD与GIS源码库！</a><br><a href="https://www.linuxprobe.com/chapter-00.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-linuxprobe&#39;)">【免费】要想入门学习Linux系统技术，你应该先选择一本适合自己的书籍</a><br><a href="https://www.grapecity.com.cn/developer/spreadjs?utm_source=cnblogs&amp;utm_medium=blogpage&amp;utm_term=bottom&amp;utm_content=SpreadJS&amp;utm_campaign=community" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-SpreadJS&#39;)">【前端】SpreadJS表格控件，可嵌入应用开发的在线Excel</a><br><a href="https://cloud.tencent.com/developer/edu/major-100005?fromSource=gwzcw.1312543.1312543.1312543#course-1274" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-微信支付&#39;)">【直播】如何快速接入微信支付功能</a><br></div>
+<div id="opt_under_post"></div>
+<div id="cnblogs_c1" class="c_ad_block"><a href="https://cloud.tencent.com/act/special/rav?fromSource=gwzcw.1312547.1312547.1312547" target="_blank"><img width="300" height="250" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/24442-20180914091419057-283402001.jpg" alt="腾讯云" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;C1&#39;);"></a></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="https://news.cnblogs.com/n/608324/" target="_blank">高通CEO：虽然我们一直吵架 但苹果以后还会是客户</a><br> ·  <a href="https://news.cnblogs.com/n/608321/" target="_blank">周鸿祎署名文章谈"责任"：发展杀手锏技术成重要课题</a><br> ·  <a href="https://news.cnblogs.com/n/608319/" target="_blank">谷歌今天20岁了！生日快乐</a><br> ·  <a href="https://news.cnblogs.com/n/608317/" target="_blank">FB和Messenger Stories日活跃用户突破3亿</a><br> ·  <a href="https://news.cnblogs.com/n/608316/" target="_blank">米粉未与雷军聚餐将小米告上法庭 小米称对方销售数据异常</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="cnblogs_c2" class="c_ad_block"><a href="http://clickc.admaster.com.cn/c/a113319,b2799157,c1705,i0,m101,8a1,8b3,h" target="_blank"><img width="468" height="60" src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/24442-20180916205959082-1265433055.jpg" alt="华为云HC0917" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;C2&#39;);"></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="https://kb.cnblogs.com/page/606682/" target="_blank">为什么说 Java 程序员必须掌握 Spring Boot ？</a><br> ·  <a href="https://kb.cnblogs.com/page/606645/" target="_blank">在学习中，有一个比掌握知识更重要的能力</a><br> ·  <a href="https://kb.cnblogs.com/page/603663/" target="_blank">如何招到一个靠谱的程序员</a><br> ·  <a href="https://kb.cnblogs.com/page/573614/" target="_blank">一个故事看懂“区块链”</a><br> ·  <a href="https://kb.cnblogs.com/page/603697/" target="_blank">被踢出去的用户</a><br></div>» <a href="https://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="https://home.cnblogs.com/u/fuckingaway/">十步杀</a><br>园龄：<a href="https://home.cnblogs.com/u/fuckingaway/" title="入园时间：2017-03-16">1年6个月</a><br>粉丝：<a href="https://home.cnblogs.com/u/fuckingaway/followers/">0</a><br>关注：<a href="https://home.cnblogs.com/u/fuckingaway/followees/">0</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;ebb5a81f-fa09-e711-845c-ac853d9f53ac&#39;)">+加关注</a></div><script>getFollowStatus('ebb5a81f-fa09-e711-845c-ac853d9f53ac')</script></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="日历">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/08/01&#39;);return false;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&lt;</font></font></a></td><td align="center">2018年9月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/10/01&#39;);return false;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&gt;</font></font></a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td><td class="CalWeekendDay" align="center">1</td></tr><tr><td class="CalWeekendDay" align="center">2</td><td align="center">3</td><td align="center">4</td><td align="center">5</td><td align="center">6</td><td align="center">7</td><td class="CalWeekendDay" align="center">8</td></tr><tr><td class="CalWeekendDay" align="center">9</td><td align="center">10</td><td align="center">11</td><td align="center">12</td><td align="center">13</td><td align="center">14</td><td class="CalWeekendDay" align="center">15</td></tr><tr><td class="CalWeekendDay" align="center">16</td><td align="center">17</td><td align="center">18</td><td align="center">19</td><td align="center">20</td><td align="center">21</td><td class="CalWeekendDay" align="center">22</td></tr><tr><td class="CalWeekendDay" align="center">23</td><td align="center">24</td><td align="center">25</td><td align="center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">26</font></font></td><td class="CalTodayDay" align="center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">27</font></font></td><td align="center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">28</font></font></td><td class="CalWeekendDay" align="center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">29</font></font></td></tr><tr><td class="CalWeekendDay" align="center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">30</font></font></td><td class="CalOtherMonthDay" align="center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1</font></font></td><td class="CalOtherMonthDay" align="center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2</font></font></td><td class="CalOtherMonthDay" align="center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">3</font></font></td><td class="CalOtherMonthDay" align="center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">4</font></font></td><td class="CalOtherMonthDay" align="center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">5</font></font></td><td class="CalOtherMonthDay" align="center"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">6</font></font></td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="https://www.cnblogs.com/fuckingaway/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="https://www.cnblogs.com/fuckingaway/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="https://www.cnblogs.com/fuckingaway/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="https://www.cnblogs.com/fuckingaway/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="https://www.cnblogs.com/fuckingaway/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div></div><div id="sidebar_toptags" class="sidebar-block"></div><div id="sidebar_categories">
+<div class="catListPostArchive">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="https://www.cnblogs.com/fuckingaway/archive/2017/04.html">2017年4月 (1)</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap" style="display: none;">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+	<div id="RecentCommentsBlock"></div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="https://www.cnblogs.com/fuckingaway/p/6703021.html">1. Annotation Processing Tool里读取Annotation属性值为Class&lt;?&gt;的值(358)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap" style="display: none;">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="https://www.cnblogs.com/fuckingaway/p/6703021.html">1. Annotation Processing Tool里读取Annotation属性值为Class&lt;?&gt;的值(1)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2018 十步杀
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 --><div id="goog-gt-tt" class="skiptranslate" dir="ltr"><div style="padding: 8px;"><div><div class="logo"><img src="./Annotation Processing Tool里读取Annotation属性值为Class___的值 - 十步杀 - 博客园_files/translate_24dp.png" width="20" height="20" alt="Google 翻译"></div></div></div><div class="top" style="padding: 8px; float: left; width: 100%;"><h1 class="title gray">原文</h1></div><div class="middle" style="padding: 8px;"><div class="original-text"></div></div><div class="bottom" style="padding: 8px;"><div class="activity-links"><span class="activity-link">提供更好的翻译建议</span><span class="activity-link"></span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none;"></div></div>
+
+
+<div class="goog-te-spinner-pos"><div class="goog-te-spinner-animation"><svg xmlns="http://www.w3.org/2000/svg" class="goog-te-spinner" width="96px" height="96px" viewBox="0 0 66 66"><circle class="goog-te-spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div></body></html>
